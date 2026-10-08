@@ -296,9 +296,9 @@ class clsPage extends clsDefaultPage
                              if ($rowsubgerecht['subgerechtcode'] == $rowmenuitem['subgerechtcode']) 
                              {
                                   $output .= "
-                              <a href='?action=add&item=" . $rowmenuitem['menuitemcode'] ."'>"
-                               . $rowmenuitem['menuitemnaam'] 
-                           . "</a><br />";
+                               <a href='?action=add&item=" . $rowmenuitem['menuitemcode'] ."'>"
+                                . $rowmenuitem['menuitemnaam'] . " - &euro; " . number_format($rowmenuitem['prijs'], 2, ',', '.') /*toegevoegd n.a.v. ticketnummer [[341]]*/
+                            . "</a><br />";
                              }
                         }   	
                         $output .= "
