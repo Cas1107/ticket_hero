@@ -260,6 +260,16 @@ class clsPage extends clsDefaultPage
           $aMenuitem 		= $this->getMenuitem($menuitemcode);
           $aantal 			= 1;
           $prijs 			= $aMenuitem['prijs'];
+
+
+          /*toegevoegd n.a.v. ticketnummer [[340]]*/
+          $sql = "UPDATE bestelling SET aantal = aantal + 1
+                  WHERE reservering_id = $reservering_id
+                    AND menuitemcode = '$menuitemcode'";
+          if ($this->connection->exec($sql) > 0)
+          {
+               return;
+          }
           
           $sql = "INSERT INTO bestelling 
                               (reservering_id, tafel, datum, tijd, menuitemcode, aantal, prijs) 
