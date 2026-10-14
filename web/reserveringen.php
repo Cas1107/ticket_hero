@@ -12,7 +12,7 @@ class clsReserveringen extends clsTableDef
                    
           $vandaag = date("Y-m-d");
           $this->selectsql = "SELECT reservering_id, tafel, datum, 
-                                     tijd, aantal, opmerkingen, klantnaam, r.klant_id
+                                     tijd, aantal, opmerkingen, allergieen, klantnaam, r.klant_id
                                 FROM reservering r 
                                 LEFT JOIN klant k on r.klant_id = k.klant_id 
                               ORDER BY datum, tijd, tafel"; 
@@ -54,6 +54,12 @@ class clsReserveringen extends clsTableDef
           $column = new clsColumn();
           $column->setFieldName("opmerkingen");
           $column->setCaption("Opmerkingen");
+          $this->columnHeader->addColumn($column);
+
+          // Toegevoegd n.a.v. ticketnummer [[336]]
+          $column = new clsColumn();
+          $column->setFieldName("allergieen");
+          $column->setCaption("Allergieën");
           $this->columnHeader->addColumn($column);
           
           $column = new clsColumn();
