@@ -101,6 +101,10 @@ class clsBestelling
           if ($aantal > 0) 
           {
                $aantal--;
+               if ($aantal === 0) {
+                    $this->deleteitem();
+                    return;
+               }
           } 
           else 
           {
