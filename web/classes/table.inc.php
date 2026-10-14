@@ -280,7 +280,7 @@ class clsTableDef
           {
                $fieldname = $column->getFieldName();
                if (!$row)
-               {    $value = "";
+               {    $value = $column->getEditType() == "Date" ? date("Y-m-d") : ""; // Ticket [[329]]
                }
                else
                {    $value = $column->getFieldValueFromDB($row);
