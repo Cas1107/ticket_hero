@@ -47,7 +47,7 @@ class clsReserveringen extends clsTableDef
           
           $column = new clsColumn();
           $column->setFieldName("aantal");
-          $column->setCaption("Volwassenen");
+          $column->setCaption("Aantal");
           $this->columnHeader->addColumn($column);
 
           // Toegevoegd n.a.v. ticketnummer [[335]]
