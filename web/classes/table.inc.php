@@ -603,6 +603,7 @@ class clsTableDef
                     $output .= 
                              "</td>";
                }
+               // Ticket [[328]]: bevestig verwijderen voordat de link wordt geopend.
                if (!$this->readonly)
                {    $output .=    
                              "<td>
@@ -611,7 +612,7 @@ class clsTableDef
                                    </a>
                               </td>
                               <td>
-                                   <a href='?action=delete&soort=$this->soort&key=" . $row[$this->getKey()]."'>
+                                   <a href='?action=delete&soort=$this->soort&key=" . $row[$this->getKey()]."' onclick='return confirm(\"Weet je zeker dat je dit wilt verwijderen?\")'>
                                         <i class='fa fa-trash-o'></i>
                                    </a>
                               </td>";
