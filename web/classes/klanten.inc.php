@@ -26,6 +26,16 @@ class clsKlanten extends clsTableDef
           $this->tablename = "klant";
           $this->key = "klant_id";
      }
+
+     // Toegevoegd n.a.v. ticketnummer [[324]]: verwijder klant en gekoppelde reserveringen samen.
+     public function getDeleteHtml()
+     {
+          $klantId = (int) $this->getKeyValue();
+          if ($klantId < 1) return "Onbekende klant.";
+          $sql = "DELETE k, r FROM klant k LEFT JOIN reservering r ON r.klant_id = k.klant_id WHERE k.klant_id = $klantId";
+          return $this->connection->query($sql) ? "De klant en gekoppelde reserveringen zijn verwijderd." : "Verwijderen is mislukt.";
+     }
+     // Einde toegevoegd n.a.v. ticketnummer [[324]]
 }
      
 class clsKlantSelect extends clsSelectColumn
