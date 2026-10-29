@@ -16,7 +16,7 @@ class clsOverzicht extends clsTableDef
                                      b.aantal AS aantalitems,
                                      m.menuitemnaam AS naam,
                                      IF(b.gereed = 1,
-                                        IF(s.gerechtcode = 'drk', 'Drank klaar', 'Gerecht klaar'),
+                                        IF(s.gerechtcode = 'drk', 'Drank klaar', 'Gerecht klaar'), /*dit*/
                                         'Nog niet klaar') AS status,
                                      r.reservering_id AS res_id
                               FROM reservering r

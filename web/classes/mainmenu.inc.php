@@ -59,6 +59,8 @@ class clsMainMenu
                            <li><a href="gegevens.php?soort=drinken">Drinken</a></li>
                            <li><a href="gegevens.php?soort=eten">Eten</a></li>
                            <li><a href="gegevens.php?soort=klanten">Klanten</a></li>
+                           <!--toegevoegd n.a.v. ticketnummer [[348]]-->
+                           <li><a href="gegevens.php?soort=medewerkers">Medewerkers / uren</a></li>
                            <li><a href="gegevens.php?soort=gerechten">Gerecht hoofdgroepen</a></li>
                            <li><a href="gegevens.php?soort=subgerechten">Gerecht subgroepen</a></li>
                          </ul>

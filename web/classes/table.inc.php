@@ -399,10 +399,11 @@ class clsTableDef
           }
           // Einde gewijzigd n.a.v. ticketnummer [[227]]
           
+          /*gewijzigd n.a.v. ticketnummer [[348]]*/
           $keyrow = false;
-          foreach ($this->connection->query($this->getSelectSql()) as $key => $row) 
+          foreach ($this->connection->query($this->getSelectSql()) as $row) 
           {
-               if ($row[$this->getKey()] == $key)
+               if ($row[$this->getKey()] == $this->getKeyValue())
                {
                     $keyrow = $row;
                     break;
@@ -411,11 +412,11 @@ class clsTableDef
 
           
           $output = "
-               <form action='?action=save&soort=$this->soort&key=" . $key . "' 
+               <form action='?action=save&soort=$this->soort&key=" . $this->getKeyValue() . "' 
                      method='POST' 
                      role='form' 
                      class='form-horizontal'>" .
-               $this->makeEditControls() .
+               $this->makeEditControls($keyrow) .
                $this->makeSaveDialog();
           
           $output .= "

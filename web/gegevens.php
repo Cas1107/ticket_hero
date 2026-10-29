@@ -128,6 +128,30 @@ class clsGerechten extends clsTableDef
      }  
 }
 
+/*toegevoegd n.a.v. ticketnummer [[348]]*/
+class clsMedewerkers extends clsTableDef
+{
+     public function __construct()
+     {
+          parent::__construct();
+
+          $this->selectsql = "SELECT medewerker_id, naam, uren FROM medewerker ORDER BY naam";
+          $this->tablename = "medewerker";
+          $this->key = "medewerker_id";
+
+          $column = new clsColumn();
+          $column->setFieldName("naam");
+          $column->setCaption("Medewerker");
+          $this->columnHeader->addColumn($column);
+
+          $column = new clsColumn();
+          $column->setFieldName("uren");
+          $column->setCaption("Gewerkte uren");
+          $column->setEditType("Number");
+          $this->columnHeader->addColumn($column);
+     }
+}
+
 class clsPage extends clsDefaultPage
 {	
      protected function contentHtml() 
@@ -158,6 +182,7 @@ class clsPage extends clsDefaultPage
                case "klanten"     : $datalist = new clsKlanten(); break;
                case "gerechten"   : $datalist = new clsGerechten(); break;
                case "subgerechten": $datalist = new clsSubgerechten(); break;
+                case "medewerkers" : $datalist = new clsMedewerkers(); break; // Ticket [[348]]
           }
           if (!$datalist)
           {
