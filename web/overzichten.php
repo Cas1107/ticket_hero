@@ -15,7 +15,9 @@ class clsOverzicht extends clsTableDef
                                      b.tafel AS tafelnr,
                                      b.aantal AS aantalitems,
                                      m.menuitemnaam AS naam,
-                                     IF(b.gereed = 1, 'klaar', 'Nog niet klaar') AS status,/*dit*/
+                                     IF(b.gereed = 1,
+                                        IF(s.gerechtcode = 'drk', 'Drank klaar', 'Gerecht klaar'),
+                                        'Nog niet klaar') AS status,
                                      r.reservering_id AS res_id
                               FROM reservering r
                               LEFT JOIN bestelling b
@@ -53,10 +55,12 @@ class clsOverzicht extends clsTableDef
           $column->setCaption("Status");
           $this->columnHeader->addColumn($column);
 
-          $column = new clsColumn();
-          $column->setFieldName("");
-          $column->setColumnHtml("<a href='?overzicht=$overzicht&gereed=<!bestelling_id!>' class='btn btn-success'>Gereed</a>");
-          $this->columnHeader->addColumn($column);
+          if ($overzicht != "ober") {
+               $column = new clsColumn();
+               $column->setFieldName("");
+               $column->setColumnHtml("<a href='?overzicht=$overzicht&gereed=<!bestelling_id!>' class='btn btn-success'>Gereed</a>");
+               $this->columnHeader->addColumn($column);
+          }
      } 
 }
 
@@ -68,11 +72,20 @@ class clsOverzichtKok extends clsOverzicht
      }
 }
 
-class clsOverzichtOber extends clsOverzicht
+/*toegevoegd n.a.v. ticketnummer [[330]]*/
+class clsOverzichtBarman extends clsOverzicht
 {     
      public function getSelectSql()
      { // Overwrite
           return $this->selectsql .= "= 'drk'"; 
+     }
+}
+
+class clsOverzichtOber extends clsOverzicht
+{
+     public function getSelectSql()
+     {
+          return $this->selectsql .= "IS NOT NULL AND b.gereed = 1";
      }
 }
 
@@ -97,11 +110,14 @@ class clsPage extends clsDefaultPage
      
      protected function getOverzicht($voorWie) 
      {         
-          if ($voorWie == "kok")
-          {    $this->datalist = new clsOverzichtKok();
+          if ($voorWie == "kok") {
+               $this->datalist = new clsOverzichtKok();
           }
-          else
-          {    $this->datalist = new clsOverzichtOber();
+          elseif ($voorWie == "barman") {
+               $this->datalist = new clsOverzichtBarman();
+          }
+          else {
+               $this->datalist = new clsOverzichtOber();
           }
           return $this->datalist->getTableHtml();
      }

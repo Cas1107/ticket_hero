@@ -40,6 +40,8 @@ class clsMainMenu
                     </a>
                          <ul class="dropdown-menu">
                            <li><a href="overzichten.php?overzicht=kok">Voor kok</a></li>
+                           <!--toegevoegd n.a.v. ticketnummer [[330]]-->
+                           <li><a href="overzichten.php?overzicht=barman">Voor barman</a></li>
                            <li><a href="overzichten.php?overzicht=ober">Voor ober</a></li>
                          </ul>
                   </li>
