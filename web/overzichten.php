@@ -10,12 +10,15 @@ class clsOverzicht extends clsTableDef
           parent::__construct();
                    
           $vandaag = date("Y-m-d");
-          $this->selectsql = "SELECT b.tafel AS tafelnr, 
-                                     b.aantal AS aantalitems, 
-                                     m.menuitemnaam AS naam, 
-                                     r.reservering_id AS res_id 
-                                   FROM reservering r
-                                   LEFT JOIN bestelling b 
+          /*toegevoegd n.a.v. ticketnummer [[326]]*/
+          $this->selectsql = "SELECT b.bestelling_id AS bestelling_id,/*dit*/ 
+                                     b.tafel AS tafelnr,
+                                     b.aantal AS aantalitems,
+                                     m.menuitemnaam AS naam,
+                                     IF(b.gereed = 1, 'Gerecht klaar', 'Nog niet klaar') AS status,/*dit*/
+                                     r.reservering_id AS res_id
+                              FROM reservering r
+                              LEFT JOIN bestelling b
                                      ON r.reservering_id = b.reservering_id
                                    LEFT JOIN menuitem m 
                                      ON b.menuitemcode = m.menuitemcode
@@ -41,6 +44,19 @@ class clsOverzicht extends clsTableDef
           $column->setFieldName("naam");
           $column->setCaption("Gerecht");
           $this->columnHeader->addColumn($column);
+
+          /*toegevoegd n.a.v. ticketnummer [[326]]*/
+          $overzicht = $_GET['overzicht'] ?? 'kok';
+
+          $column = new clsColumn();
+          $column->setFieldName("status");
+          $column->setCaption("Status");
+          $this->columnHeader->addColumn($column);
+
+          $column = new clsColumn();
+          $column->setFieldName("");
+          $column->setColumnHtml("<a href='?overzicht=$overzicht&gereed=<!bestelling_id!>' class='btn btn-success'>Gereed</a>");
+          $this->columnHeader->addColumn($column);
      } 
 }
 
@@ -63,14 +79,21 @@ class clsOverzichtOber extends clsOverzicht
 class clsPage extends clsDefaultPage
 {
      protected function contentHtml()
-     {	// Gewijzigd n.a.v. ticketnummer [[245]]		
-          if (isset($_GET['overzicht'])) 
-          {
-               return $this->getOverzicht($_GET['overzicht']);
-          }
-          return "";
-          // Einde gewijzigd n.a.v. ticketnummer [[245]]
+{
+     /*toegevoegd n.a.v. ticketnummer [[326]]*/
+     if (isset($_GET['gereed'])) {
+          $id = (int) $_GET['gereed'];
+          database::connect()->query("UPDATE bestelling SET gereed = 1 WHERE bestelling_id = $id");
      }
+
+     // Gewijzigd n.a.v. ticketnummer [[245]]
+     if (isset($_GET['overzicht'])) {
+          return $this->getOverzicht($_GET['overzicht']);
+     }
+
+     return "";
+     // Einde gewijzigd n.a.v. ticketnummer [[245]]
+}
      
      protected function getOverzicht($voorWie) 
      {         
