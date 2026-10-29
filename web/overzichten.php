@@ -15,7 +15,7 @@ class clsOverzicht extends clsTableDef
                                      b.tafel AS tafelnr,
                                      b.aantal AS aantalitems,
                                      m.menuitemnaam AS naam,
-                                     IF(b.gereed = 1, 'Gerecht klaar', 'Nog niet klaar') AS status,/*dit*/
+                                     IF(b.gereed = 1, 'klaar', 'Nog niet klaar') AS status,/*dit*/
                                      r.reservering_id AS res_id
                               FROM reservering r
                               LEFT JOIN bestelling b
